@@ -9,6 +9,7 @@ import {
 import {
   toggleDefaultRaceIsPublic,
   toggleSyntaxHighlightning,
+  toggleDefaultTiktokVisibility,
   useSettingsStore,
 } from "../../../modules/play2/state/settings-store";
 import { Overlay } from "../Overlay";
@@ -23,6 +24,7 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
   const isSyntaxHighlightingEnabled = useSettingsStore(
     (s) => s.syntaxHighlighting
   );
+  const isTikTokLinkVisibleByDefault = useSettingsStore((s) => s.isTikTokLinkVisible);
   const isPublicRaceByDefault = useSettingsStore((s) => s.defaultIsPublic);
   return (
     <>
@@ -49,6 +51,13 @@ export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
             description="Races you start will be public by default"
             checked={isPublicRaceByDefault}
             toggleEnabled={toggleDefaultRaceIsPublic}
+          />
+
+          <ToggleSelector
+            title="tiktok button"
+            description="Disable to hide TikTok link"
+            checked={isTikTokLinkVisibleByDefault}
+            toggleEnabled={toggleDefaultTiktokVisibility}
           />
           <CaretSelector />
         </Modal>

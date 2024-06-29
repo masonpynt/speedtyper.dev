@@ -18,6 +18,7 @@ export interface SettingsState {
   syntaxHighlighting: boolean;
   raceIsPublic: boolean;
   defaultIsPublic: boolean;
+  isTikTokLinkVisible: boolean;
 }
 
 const SYNTAX_HIGHLIGHTING_KEY = "syntaxHighlighting";
@@ -27,6 +28,8 @@ const SMOOTH_CARET_KEY = "smoothCaret";
 const DEFAULT_RACE_IS_PUBLIC_KEY = "defaultRaceIsPublic2";
 
 const LANGUAGE_KEY = "language";
+
+const TIKTOK_LINK_VISIBILITY_KEY = "isTikTokLinkVisible";
 
 function getInitialToggleStateFromLocalStorage(
   key: string,
@@ -76,6 +79,11 @@ export const useSettingsStore = create<SettingsState>((_set, _get) => ({
     false
   ),
   languageSelected: getInitialLanguageFromLocalStorage(LANGUAGE_KEY),
+
+  isTikTokLinkVisible: getInitialToggleStateFromLocalStorage(
+    TIKTOK_LINK_VISIBILITY_KEY,
+    true
+  ),
 }));
 
 export const setCaretType = (caretType: "smooth" | "block") => {
@@ -110,6 +118,13 @@ export const toggleSyntaxHighlightning = () => {
   syntaxHighlighting = !syntaxHighlighting;
   localStorage.setItem(SYNTAX_HIGHLIGHTING_KEY, syntaxHighlighting.toString());
   useSettingsStore.setState((state) => ({ ...state, syntaxHighlighting }));
+};
+export const toggleDefaultTiktokVisibility = () => {
+  const isTikTokVisible = localStorage.getItem(TIKTOK_LINK_VISIBILITY_KEY);
+  let isTikTokLinkVisible = isTikTokVisible === "true";
+  isTikTokLinkVisible = !isTikTokLinkVisible;
+  localStorage.setItem(TIKTOK_LINK_VISIBILITY_KEY, isTikTokLinkVisible.toString());
+  useSettingsStore.setState((state) => ({ ...state, isTikTokLinkVisible }));
 };
 
 export const openSettingsModal = () => {
